@@ -14,7 +14,7 @@ class GuessSyntaxCommand(sublime_plugin.TextCommand):
 
 		# buffer has never been saved
 		if self.view.is_scratch() or not self.view.file_name:
-		return
+			return
 
 		self.file = self.view.file_name()
 		self.syn = view.settings().get('syntax') or ''
