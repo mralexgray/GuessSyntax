@@ -12,9 +12,9 @@ class GuessSyntaxListener(sublime_plugin.EventListener):
 class GuessSyntaxCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 
- 		# buffer has never been saved
+		# buffer has never been saved
 		if self.view.is_scratch() or not self.view.file_name:
-			return
+		return
 
 		self.file = self.view.file_name()
 		self.syn = view.settings().get('syntax') or ''
@@ -70,9 +70,9 @@ class GuessSyntaxCommand(sublime_plugin.TextCommand):
 	def fix_syntax(self, nameof):
 		lname = nameof.lower()
 		choices = {
-			'json'					: ('JavaScript', 			               'JSON'),
-			'shell' 					: ('ShellScript', 		 'Shell-Unix-Generic'),
-			'restructuredtext'	: ('RestructuredText',     'reStructuredText')
+			'json'               : ('JavaScript',                       'JSON'),
+			'shell'              : ('ShellScript',        'Shell-Unix-Generic'),
+			'restructuredtext'   : ('RestructuredText',     'reStructuredText')
 		}
 		return choices.get(lname,(nameof, nameof))
 
