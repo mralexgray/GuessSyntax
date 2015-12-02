@@ -9,25 +9,22 @@ class GuessSyntaxListener(sublime_plugin.EventListener):
 	def on_post_save(self, view):
 		view.run_command('guess_syntax')
 
-class GuessSyntaxCommand(sublime_plugin.TextCommand):
+class GuessSyntaxCommand(sublime_plugin.TextCommand):	
 	def run(self, edit):
 
-		# buffer has never been saved
-		if self.view.is_scratch() or not self.view.file_name:
+		if self.view.is_scratch() or not self.view.file_name: # buffer has never been saved
 			return
 
 		self.file = self.view.file_name()
-		self.syn = view.settings().get('syntax') or ''
+		self.syn = self.view.settings().get('syntax')
 
-		print('guessing syntax of' + self.file + '(' + self.syn + ')')
+		print('guessing syntax of' + self.file + '(' + self.view.settings().get('syntax') + ')')
 
 		# Only operate on files with no file extension (i.e. no dots)
-		# if self.syn
-		# if not 'Plain' in self.syn
-			# print('Skipping syntaxed/extensioned document: ' + self.syn)
-			# return
-		if '.' in os.path.basename(self.file):
-			print('Skipping extensioned document: ' + os.path.basename(self.file))
+		if self.syn and not "Plain" in self.syn:
+			print('Skipping syntaxed/extensioned document: ' + self.syn)
+			if '.' in os.path.basename(self.file):
+				print('Skipping extensioned document: ' + os.path.basename(self.file))
 			return
 
 		os.environ['PATH'] += ':/usr/local/bin:/usr/local/sbin'
@@ -46,8 +43,13 @@ class GuessSyntaxCommand(sublime_plugin.TextCommand):
 			if lang:
 				self.set_syntax(self.fix_syntax(lang))
 			else:
-				print("couldnt find language! got: " + lang)
-			proc.close()
+				ext = self.file.split(".")[-1]
+				print("couldnt find language! got: " + lang + " trying ext: " + ext)
+				lang = self.set_syntax(self.fix_syntax(lang))
+				if lang:
+					self.set_syntax(self.fix_syntax(lang))
+				else:
+					proc.close()
 
 		except OSError:
 			sublime.error_message('Error calling NodeJS app')
