@@ -1,0 +1,9 @@
+[
+    {
+
+      "caption": "Guess Syntax",
+      "mnemonic": "G",
+      "id": "GuessSyntax",
+      "command": "guess_syntax",
+	}
+]

@@ -1,8 +1,10 @@
 GuessSyntax Sublime Text 2/3 Plugin
 ------------------------------
 
-Introduction
-============
+![why.isnt.this.builtin](why.isnt.this.builtin.png)
+
+You're a computer, dummie.. Figure it out!
+==========================================
 
 This is a small plugin for Sublime Text 2 and 3 that allows automatic syntax detection on open/save of ANY document.
 
